@@ -177,5 +177,67 @@ plt.show()
 
 
 
+Practical: Implementation of Multiple Linear Regression using Python
+You can write the following content directly in your practical journal.
+1. Aim
+To implement Multiple Linear Regression using Python to predict sales based on TV, Radio, and Newspaper advertising expenditure.
+2. Objectives
+3. To understand Multiple Linear Regression.
+4. To load and explore the Advertising dataset.
+5. To perform data cleaning and preprocessing.
+6. To train and test the regression model.
+7. To predict sales using advertising expenditure.
+8. To evaluate model performance using MSE, RMSE and R² score.
+9. Theory
+Multiple Linear Regression is a supervised machine learning algorithm used to predict a continuous dependent variable using two or more independent variables.
+
+In this practical, we use advertising expenditure on TV, Radio and Newspaper to predict product sales.
+
+Regression Equation:
+\[
+Y=b_0+b_1X_1+b_2X_2+b_3X_3
+\]
+
+Where:
+- Y = Predicted Sales
+- b₀ = Intercept
+- b₁, b₂, b₃ = Coefficients
+- X₁ = TV advertising
+- X₂ = Radio advertising
+- X₃ = Newspaper advertising
+4. Algorithm
+5. Start the program.
+6. Import required libraries such as NumPy, Pandas and Scikit-learn.
+7. Load the Advertising dataset using its URL.
+8. Remove the unnecessary index column if present.
+9. Display the first five records of the dataset.
+10. Check dataset shape, information, statistical summary and missing values.
+11. Clean the column names.
+12. Select TV, Radio and Newspaper as independent variables (X).
+13. Select Sales as the dependent variable (Y).
+14. Split the dataset into 80% training data and 20% testing data.
+15. Create a Linear Regression model.
+16. Train the model using the fit() function.
+17. Display the intercept and coefficients.
+18. Predict sales using the predict() function.
+19. Compare actual and predicted sales.
+20. Calculate MSE, RMSE and R² score.
+21. Predict sales for new advertising expenditure.
+22. Display the final regression equation.
+23. Plot the Actual vs Predicted Sales graph.
+24. Stop the program.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
