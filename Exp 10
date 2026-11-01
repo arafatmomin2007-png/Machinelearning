@@ -194,3 +194,43 @@ plt.xlabel("Number of Trees")
 plt.ylabel("Training Time (seconds)")
 plt.grid(True)
 plt.show()
+
+
+
+
+
+
+
+
+
+
+
+Aim
+To implement and compare Logistic Regression, Random Forest, and Gradient Boosting classification algorithms using the Breast Cancer Wisconsin dataset.
+Dataset
+- Samples: 569
+- Features: 30
+- Classes: Malignant (0) and Benign (1)
+Algorithms Used
+1. Logistic Regression: Used for binary classification.
+2. Random Forest: Uses multiple decision trees to make predictions.
+3. Gradient Boosting: Builds trees one after another to improve prediction.
+Procedure
+1. Load the Breast Cancer dataset.
+2. Divide the dataset into 80% training and 20% testing data.
+3. Standardize the features for Logistic Regression.
+4. Train all three models.
+5. Predict the test data.
+6. Calculate Accuracy, Precision, Recall, F1-Score, and Training Time.
+7. Compare the performance of all models.
+8. Test Random Forest with 10, 50, 100, and 200 trees.
+Performance Metrics
+- Accuracy: Measures overall correct predictions.
+- Precision: Measures how many predicted malignant cases are actually malignant.
+- Recall: Measures how many actual malignant cases are correctly detected.
+- F1-Score: Combination of Precision and Recall.
+- Training Time: Time required to train the model.
+Observation
+The performance of all three models is compared using graphs and a results table. Random Forest is also analyzed to see how increasing the number of trees affects accuracy and training time.
+Result
+The three machine learning algorithms were successfully implemented and compared. The model with the highest malignant recall is identified as the best model for detecting malignant cases.
