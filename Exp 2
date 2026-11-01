@@ -1,0 +1,162 @@
+import time
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from sklearn.datasets import load_digits
+from sklearn.decomposition import PCA
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+
+
+
+
+
+
+
+
+# Digits dataset: 1797 samples, 64 pixel features (8x8 images)
+digits = load_digits()
+X = digits.data
+y = digits.target
+
+print("Original Feature Matrix Shape:", X.shape)
+print("Target Labels (Classes 0-9)  :", np.unique(y))
+
+
+
+
+
+
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42, stratify=y
+)
+
+print(f"Training instances: {X_train.shape[0]} | Features: {X_train.shape[1]}")
+print(f"Testing instances : {X_test.shape[0]}  | Features: {X_test.shape[1]}")
+
+
+
+
+
+
+start_baseline = time.time()
+
+baseline_model = SVC()
+baseline_model.fit(X_train, y_train)
+y_pred_baseline = baseline_model.predict(X_test)
+
+time_baseline = time.time() - start_baseline
+acc_baseline = accuracy_score(y_test, y_pred_baseline)
+
+print("--- Baseline Model (64 Features) ---")
+print(f"Accuracy         : {acc_baseline * 100:.2f}%")
+print(f"Execution Time   : {time_baseline:.4f} seconds")
+
+
+
+
+
+
+
+
+# Reduce 64 dimensions to 20 principal components
+pca = PCA(n_components=20)
+X_train_pca = pca.fit_transform(X_train)
+X_test_pca = pca.transform(X_test)
+
+start_pca = time.time()
+
+model_pca = SVC()
+model_pca.fit(X_train_pca, y_train)
+y_pred_pca = model_pca.predict(X_test_pca)
+
+time_pca = time.time() - start_pca
+acc_pca = accuracy_score(y_test, y_pred_pca)
+variance_retained = np.sum(pca.explained_variance_ratio_) * 100
+
+print("--- PCA Model (20 Features) ---")
+print(f"Accuracy                : {acc_pca * 100:.2f}%")
+print(f"Execution Time          : {time_pca:.4f} seconds")
+print(f"Total Variance Retained : {variance_retained:.2f}%")
+
+
+
+
+
+
+
+
+# LDA dimensions are mathematically capped at (n_classes - 1) = 10 - 1 = 9
+lda = LDA(n_components=9)
+X_train_lda = lda.fit_transform(X_train, y_train)
+X_test_lda = lda.transform(X_test)
+
+start_lda = time.time()
+
+model_lda = SVC()
+model_lda.fit(X_train_lda, y_train)
+y_pred_lda = model_lda.predict(X_test_lda)
+
+time_lda = time.time() - start_lda
+acc_lda = accuracy_score(y_test, y_pred_lda)
+
+print("--- LDA Model (9 Features) ---")
+print(f"Accuracy       : {acc_lda * 100:.2f}%")
+print(f"Execution Time : {time_lda:.4f} seconds")
+
+
+
+
+
+
+
+comparison_df = pd.DataFrame({
+    "Method": ["Baseline (Original)", "PCA", "LDA"],
+    "Feature Count": [X_train.shape[1], 20, 9],
+    "Accuracy (%)": [acc_baseline * 100, acc_pca * 100, acc_lda * 100],
+    "Training + Inference Time (s)": [time_baseline, time_pca, time_lda],
+})
+
+display(comparison_df.round(4))
+
+
+
+
+
+
+
+
+# Transform full dataset to 2D for visual inspection
+pca_2d = PCA(n_components=2).fit_transform(X)
+lda_2d = LDA(n_components=2).fit_transform(X, y)
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# Plot PCA 2D
+scatter_pca = axes[0].scatter(
+    pca_2d[:, 0], pca_2d[:, 1], c=y, cmap="tab10", s=15, alpha=0.8
+)
+axes[0].set_title("PCA: 2D Unsupervised Projection")
+axes[0].set_xlabel("Principal Component 1")
+axes[0].set_ylabel("Principal Component 2")
+axes[0].grid(True, linestyle="--", alpha=0.5)
+
+# Plot LDA 2D
+scatter_lda = axes[1].scatter(
+    lda_2d[:, 0], lda_2d[:, 1], c=y, cmap="tab10", s=15, alpha=0.8
+)
+axes[1].set_title("LDA: 2D Supervised Projection (Class Separability)")
+axes[1].set_xlabel("Linear Discriminant 1")
+axes[1].set_ylabel("Linear Discriminant 2")
+axes[1].grid(True, linestyle="--", alpha=0.5)
+
+plt.colorbar(scatter_lda, ax=axes, orientation="vertical", label="Digit Class (0-9)")
+plt.show()
+
+
+
+
+
