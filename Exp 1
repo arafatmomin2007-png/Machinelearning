@@ -107,3 +107,45 @@ display(df.head(10))
 df.to_csv("titanic_clean_model_ready.csv", index=False)
 print("\nDataset successfully saved as 'titanic_clean_model_ready.csv'!")
 
+
+
+
+
+
+
+
+
+
+1. What is Feature Engineering?
+Feature Engineering is the process of creating, selecting, transforming, or modifying input features (variables) from raw data to improve the performance of a Machine Learning model.
+
+In simple words, feature engineering means preparing and improving data so that a machine learning algorithm can learn better.
+
+Example:
+
+Suppose we have student data:
+Name	Study Hours	Attendance	Marks
+A	5	90%	85
+B	2	60%	55
+
+Here:
+- Study Hours and Attendance are input features.
+- Marks is the target variable.
+We can create a new feature called Performance Level based on marks.
+2. Main techniques of Feature Engineering
+1. Feature Creation: Creating new features from existing data.
+2. Feature Selection: Selecting the most important features.
+3. Feature Extraction: Extracting useful information from existing features.
+4. Feature Transformation: Changing data into a suitable format.
+5. Feature Scaling: Bringing numerical features to a similar scale.
+6. Encoding: Converting categorical data into numerical values.
+3. Algorithms / Techniques used in Feature Engineering
+Technique	Purpose
+PCA	Reduces the number of features.
+LDA	Reduces dimensions while separating classes.
+StandardScaler	Standardizes numerical features.
+MinMaxScaler	Scales values between a specified range, commonly 0 and 1.
+One-Hot Encoding	Converts categorical values into binary columns.
+Label Encoding	Converts categories into numerical labels.
+Polynomial Features	Creates new features using polynomial combinations.
+RFE	Selects important features recursively.
