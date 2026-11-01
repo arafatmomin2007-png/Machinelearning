@@ -116,36 +116,55 @@ print("\nDataset successfully saved as 'titanic_clean_model_ready.csv'!")
 
 
 
-1. What is Feature Engineering?
-Feature Engineering is the process of creating, selecting, transforming, or modifying input features (variables) from raw data to improve the performance of a Machine Learning model.
 
-In simple words, feature engineering means preparing and improving data so that a machine learning algorithm can learn better.
+1. Aim
+To perform data preprocessing and feature engineering on the Titanic dataset by handling missing values, encoding categorical data, standardizing numerical features and preparing a clean dataset for Machine Learning models.
+2. Objective
+1. To load and understand the Titanic dataset.
+2. To identify and handle missing values.
+3. To remove unnecessary columns.
+4. To convert categorical data into numerical form.
+5. To standardize numerical features.
+6. To prepare a clean, model-ready dataset.
+7. To save the processed dataset in CSV format.
+3. Software Requirements
+- Python
+- Google Colab / Jupyter Notebook
+- NumPy
+- Pandas
+- Seaborn
+- Scikit-learn
+4. Theory
+Data Preprocessing is the process of cleaning and transforming raw data into a suitable format for Machine Learning algorithms.
 
-Example:
+It improves data quality and makes the dataset suitable for model training.
 
-Suppose we have student data:
-Name	Study Hours	Attendance	Marks
-A	5	90%	85
-B	2	60%	55
+The following techniques are used in this practical:
 
-Here:
-- Study Hours and Attendance are input features.
-- Marks is the target variable.
-We can create a new feature called Performance Level based on marks.
-2. Main techniques of Feature Engineering
-1. Feature Creation: Creating new features from existing data.
-2. Feature Selection: Selecting the most important features.
-3. Feature Extraction: Extracting useful information from existing features.
-4. Feature Transformation: Changing data into a suitable format.
-5. Feature Scaling: Bringing numerical features to a similar scale.
-6. Encoding: Converting categorical data into numerical values.
-3. Algorithms / Techniques used in Feature Engineering
-Technique	Purpose
-PCA	Reduces the number of features.
-LDA	Reduces dimensions while separating classes.
-StandardScaler	Standardizes numerical features.
-MinMaxScaler	Scales values between a specified range, commonly 0 and 1.
-One-Hot Encoding	Converts categorical values into binary columns.
-Label Encoding	Converts categories into numerical labels.
-Polynomial Features	Creates new features using polynomial combinations.
-RFE	Selects important features recursively.
+1. Handling Missing Values: Filling missing numerical values using median and categorical values using mode.
+
+2. Removing Unnecessary Columns: Removing columns such as PassengerId, Name, Ticket and Cabin.
+
+3. Label Encoding: Converting categorical values into numerical values.
+
+4. One-Hot Encoding: Converting categorical values into separate binary columns.
+
+5. Feature Scaling: Standardizing numerical features using StandardScaler.
+5. Algorithm
+1. Start the program.
+2. Import the required Python libraries such as NumPy, Pandas, Seaborn and Scikit-learn.
+3. Load the Titanic dataset using Pandas.
+4. Display the first five records and dataset shape.
+5. Check the missing values in each column.
+6. Calculate the median of the Age column and replace missing Age values with the median.
+7. Calculate the mode of the Embarked column and replace missing values with the mode.
+8. Drop unnecessary columns such as Cabin, PassengerId, Name and Ticket.
+9. Apply Label Encoding to the Sex column.
+10. Apply One-Hot Encoding to the Embarked column.
+11. Select numerical columns such as Age, SibSp, Parch and Fare.
+12. Apply StandardScaler to standardize numerical features.
+13. Verify that no missing values remain.
+14. Check the data types of all columns.
+15. Display the final processed dataset.
+16. Save the cleaned dataset as a CSV file.
+17. Stop the program.
