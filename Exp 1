@@ -1,0 +1,109 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+
+
+
+
+
+
+
+# Load Titanic directly from Seaborn's verified open access repository
+df = pd.read_csv(
+    "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+)
+
+print("First 5 records of raw dataset:")
+display(df.head())
+print("\nDataset Shape (rows, columns):", df.shape)
+
+
+
+
+
+
+
+
+print("Missing values per column before treatment:")
+print(df.isnull().sum())
+
+
+
+
+
+
+
+# 1. Impute missing numerical values in 'Age' with the median
+age_median = df["Age"].median()
+df["Age"] = df["Age"].fillna(age_median)
+
+# 2. Impute missing categorical values in 'Embarked' with the mode
+embarked_mode = df["Embarked"].mode()[0]
+df["Embarked"] = df["Embarked"].fillna(embarked_mode)
+
+# 3. Drop 'Cabin' due to excessive missingness, and drop identifier columns
+df = df.drop(
+    columns=["Cabin", "PassengerId", "Name", "Ticket"], errors="ignore"
+)
+
+print(
+    f"Remaining missing values in Age: {df['Age'].isnull().sum()} (Filled with median: {age_median})"
+)
+print(
+    f"Remaining missing values in Embarked: {df['Embarked'].isnull().sum()} (Filled with mode: '{embarked_mode}')"
+)
+
+
+
+
+
+
+# 1. Binary categorical encoding: Label Encoding on 'Sex' (female/male -> 0/1)
+label_encoder = LabelEncoder()
+df["Sex"] = label_encoder.fit_transform(df["Sex"])
+
+# 2. Multi-class nominal encoding: One-Hot Encoding on 'Embarked'
+df = pd.get_dummies(df, columns=["Embarked"], drop_first=True, dtype=int)
+
+print("Data preview after categorical encoding:")
+df.head()
+
+
+
+
+
+
+
+numerical_cols = ["Age", "SibSp", "Parch", "Fare"]
+
+# Apply StandardScaler to standardize numerical columns to mean ≈ 0 and std ≈ 1
+scaler = StandardScaler()
+df[numerical_cols] = scaler.fit_transform(df[numerical_cols])
+
+print("Standardization complete for:", numerical_cols)
+df.head()
+
+
+
+
+
+
+print("--- Final Model-Ready Dataset Verification ---")
+
+# 1. Verify missing values are 0
+print("\nMissing values remaining:")
+print(df.isnull().sum())
+
+# 2. Verify all columns are numeric
+print("\nColumn data types:")
+print(df.dtypes)
+
+# 3. View the final cleaned data
+print("\nCleaned and Processed Dataset Preview:")
+display(df.head(10))
+
+# 4. Save to CSV
+df.to_csv("titanic_clean_model_ready.csv", index=False)
+print("\nDataset successfully saved as 'titanic_clean_model_ready.csv'!")
+
