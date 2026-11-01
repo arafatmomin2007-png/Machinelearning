@@ -170,3 +170,60 @@ plt.show()
 
 
 
+
+
+
+
+
+Practical: DBSCAN Clustering on Non-Linear Data
+1. Aim
+To implement DBSCAN (Density-Based Spatial Clustering of Applications with Noise) clustering on non-linear data and compare its performance with K-Means clustering.
+2. Objective
+- To generate a non-linear dataset using the make_moons() function.
+- To apply the DBSCAN clustering algorithm.
+- To identify core points, border points, and noise/outlier points.
+- To visualize the clusters obtained by DBSCAN.
+- To compare DBSCAN with K-Means on non-linear data.
+3. Theory
+DBSCAN stands for Density-Based Spatial Clustering of Applications with Noise.
+
+It is an unsupervised machine learning clustering algorithm that groups data points based on their density.
+
+Unlike K-Means, DBSCAN does not require the number of clusters to be specified beforehand. It can also identify noise/outliers and can discover clusters having arbitrary shapes.
+
+5. Working of DBSCAN
+The algorithm works as follows:
+1. Select an unvisited data point.
+2. Find all points within its eps distance.
+3. Check whether the number of neighboring points is at least min_samples.
+4. If yes, mark the point as a core point and create a new cluster.
+5. Expand the cluster by checking the neighboring points.
+6. Add reachable core and border points to the cluster.
+7. If a point does not satisfy the density requirement, mark it as noise temporarily.
+8. Continue until all data points have been visited.
+9. Finally, obtain the clusters and noise points.
+6. Algorithm
+DBSCAN Algorithm
+Input: Dataset X, eps, and min_samples
+
+Output: Cluster labels for all data points.
+1. Start.
+2. Generate the non-linear dataset using make_moons().
+3. Set eps = 0.2 and min_samples = 5.
+4. Initialize DBSCAN with these parameters.
+5. Calculate the distance/neighborhood of each data point.
+6. Identify core points based on min_samples.
+7. Expand clusters using density-connected points.
+8. Assign border points to appropriate clusters.
+9. Mark points that cannot be assigned to any cluster as noise.
+10. Count the number of clusters and noise points.
+11. Display the distribution of core, border, and noise points.
+12. Plot the DBSCAN clusters.
+13. Apply K-Means with K = 2 on the same dataset.
+14. Plot and compare the results of K-Means and DBSCAN.
+15. Stop.
+
+
+
+
+
