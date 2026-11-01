@@ -138,3 +138,77 @@ centers_df = pd.DataFrame(centers_original, columns=iris.feature_names)
 
 print("\nCluster Centers (Original Feature Scale):")
 display(centers_df.round(4))
+
+
+
+
+
+
+
+
+
+
+
+
+1. Aim
+Aim:
+To implement K-Means Clustering on the Iris dataset and determine the optimal number of clusters using the Elbow Method and Silhouette Method, followed by visualization of the clusters and their centroids.
+2. Objective
+1. To load the Iris dataset using Scikit-learn.
+2. To preprocess and standardize the dataset.
+3. To find the optimal number of clusters using the Elbow Method.
+4. To evaluate the clusters using the Silhouette Score.
+5. To apply the K-Means clustering algorithm.
+6. To visualize the formed clusters and cluster centroids.
+7. To display the final cluster centers.
+3. Theory
+K-Means Clustering is an unsupervised machine learning algorithm used to divide data into a specified number of groups called clusters.
+
+The algorithm groups data points in such a way that points within the same cluster are similar to each other, while points belonging to different clusters are relatively different.
+
+In this practical, the Iris dataset is used. It contains 150 samples with 4 features:
+- Sepal Length
+- Sepal Width
+- Petal Length
+- Petal Width
+The data is standardized before applying K-Means so that features with larger numerical values do not dominate the clustering process.
+4. K-Means Algorithm
+The basic steps of the K-Means algorithm are:
+
+Step 1: Choose the number of clusters, K.
+
+Step 2: Randomly initialize K cluster centroids.
+
+Step 3: Calculate the distance between each data point and every centroid.
+
+Step 4: Assign each data point to the nearest centroid.
+
+Step 5: Recalculate the centroid of each cluster by taking the mean of all points belonging to that cluster.
+
+Step 6: Repeat the assignment and centroid calculation steps until the centroids become stable or the algorithm reaches its stopping condition.
+
+Step 7: The final groups are obtained as the clusters.
+Simple flow:
+Input Data → Select K → Initialize Centroids → Assign Points → Recalculate Centroids → Repeat → Final Clusters
+5. Elbow Method
+The Elbow Method is used to find a suitable value of K.
+
+It calculates the inertia for different values of K.
+
+Inertia represents the total squared distance between each data point and the centroid of its assigned cluster.
+- Lower inertia means more compact clusters.
+- As K increases, inertia decreases.
+- We select K at the point where the decrease in inertia starts becoming less significant.
+- This point looks like an "elbow" in the graph.
+For the Iris dataset, K = 3 is generally selected.
+6. Silhouette Method
+The Silhouette Score is used to measure how well the data points fit into their assigned clusters.
+
+The score ranges from -1 to +1.
+- +1: Very well-separated clusters
+- 0: Overlapping clusters
+- Negative value: Data points may be assigned to the wrong cluster
+A higher Silhouette Score indicates better clustering.
+
+In the program, Silhouette Scores are calculated for different values of K, and K = 3 is selected for the final model.
+
