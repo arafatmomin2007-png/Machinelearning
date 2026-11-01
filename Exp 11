@@ -9,6 +9,13 @@ from IPython.display import display
 
 print("Libraries imported successfully!")
 
+
+
+
+
+
+
+
 # --- Step 1: Environment Definition ---
 GRID_SIZE = 4
 START_STATE = (0, 0)
@@ -29,6 +36,14 @@ print("Number of Actions:", NUM_ACTIONS)
 print("Number of States:", NUM_STATES)
 
 
+
+
+
+
+
+
+
+
 def state_to_number(state):
     row, col = state
     return row * GRID_SIZE + col
@@ -42,6 +57,17 @@ def number_to_state(state_number):
 
 print("\nState (0, 0) Index:", state_to_number((0, 0)))
 print("State (3, 3) Index:", state_to_number((3, 3)))
+
+
+
+
+
+
+
+
+
+
+
 
 
 def take_action(state, action):
@@ -73,6 +99,14 @@ def take_action(state, action):
     return next_state, reward, done
 
 
+
+
+
+
+
+
+
+
 # Visualizing initial environment setup
 plt.figure(figsize=(5, 5))
 for i in range(GRID_SIZE + 1):
@@ -90,6 +124,14 @@ plt.title("4 x 4 Grid World")
 plt.tight_layout()
 plt.show()
 
+
+
+
+
+
+
+
+
 # --- Step 2: Q-Learning Training Algorithm ---
 alpha = 0.1      # Learning Rate
 gamma = 0.9      # Discount Factor
@@ -99,6 +141,15 @@ max_steps = 100
 print(f"Learning Rate (alpha): {alpha}")
 print(f"Discount Factor (gamma): {gamma}")
 print(f"Episodes: {episodes}")
+
+
+
+
+
+
+
+
+
 
 
 def train_q_learning(epsilon):
@@ -144,14 +195,40 @@ def train_q_learning(epsilon):
     return Q_table, rewards, steps_list, success_list
 
 
+
+
+
+
+
+
+
+
 # Train baseline model with epsilon = 0.1
 Q_01, rewards_01, steps_01, success_01 = train_q_learning(epsilon=0.1)
 print("\nTraining completed!")
+
+
+
+
+
+
+
+
+
 
 # --- Step 3: Inspect Learned Q-Table ---
 print("\nFinal Learned Q-Table:")
 q_df = pd.DataFrame(Q_01, columns=["UP", "DOWN", "LEFT", "RIGHT"])
 display(q_df.round(4))
+
+
+
+
+
+
+
+
+
 
 # --- Step 4: Extract and Visualize Optimal Policy ---
 action_symbols = {UP: "↑", DOWN: "↓", LEFT: "←", RIGHT: "→"}
@@ -167,6 +244,14 @@ policy_grid[3, 3] = "G"
 
 print("\nLearned Optimal Policy Grid:")
 print(policy_grid)
+
+
+
+
+
+
+
+
 
 plt.figure(figsize=(6, 6))
 for i in range(GRID_SIZE + 1):
@@ -188,6 +273,15 @@ plt.title("Learned Optimal Policy")
 plt.tight_layout()
 plt.show()
 
+
+
+
+
+
+
+
+
+
 # --- Step 5: Reward Convergence Curves ---
 plt.figure(figsize=(10, 4))
 plt.plot(rewards_01, alpha=0.5, color="steelblue")
@@ -197,6 +291,14 @@ plt.title("Q-Learning: Reward per Episode")
 plt.grid(True, linestyle="--", alpha=0.5)
 plt.tight_layout()
 plt.show()
+
+
+
+
+
+
+
+
 
 window = 50
 moving_average = pd.Series(rewards_01).rolling(window).mean()
@@ -210,6 +312,13 @@ plt.grid(True, linestyle="--", alpha=0.5)
 plt.tight_layout()
 plt.show()
 
+
+
+
+
+
+
+
 # Compute summary performance metrics
 success_rate = np.mean(success_01) * 100
 successful_steps = [steps_01[i] for i in range(len(steps_01)) if success_01[i] == 1]
@@ -220,6 +329,13 @@ print("\n--- Summary Performance Metrics (epsilon = 0.1) ---")
 print(f"Success Rate   : {success_rate:.2f}%")
 print(f"Average Reward : {average_reward:.2f}")
 print(f"Average Steps  : {average_steps:.2f}")
+
+
+
+
+
+
+
 
 # --- Step 6: Parameter Experiment (Effect of Epsilon) ---
 epsilon_values = [0.5, 0.1, 0.01]
@@ -242,6 +358,16 @@ results_df = pd.DataFrame(
 print("\n--- Effect of Epsilon Comparison ---")
 display(results_df.round(4))
 
+
+
+
+
+
+
+
+
+
+
 # Bar chart: Success rate by epsilon
 plt.figure(figsize=(7, 4))
 plt.bar(results_df["Epsilon"].astype(str), results_df["Success Rate (%)"], color="steelblue")
@@ -253,6 +379,15 @@ plt.grid(axis="y", linestyle="--", alpha=0.5)
 plt.tight_layout()
 plt.show()
 
+
+
+
+
+
+
+
+
+
 # Bar chart: Average reward by epsilon
 plt.figure(figsize=(7, 4))
 plt.bar(results_df["Epsilon"].astype(str), results_df["Average Reward"], color="teal")
@@ -262,6 +397,15 @@ plt.title("Effect of Epsilon on Average Reward")
 plt.grid(axis="y", linestyle="--", alpha=0.5)
 plt.tight_layout()
 plt.show()
+
+
+
+
+
+
+
+
+
 
 # Comparative learning curves
 plt.figure(figsize=(10, 5))
@@ -277,3 +421,67 @@ plt.legend()
 plt.grid(True, linestyle="--", alpha=0.5)
 plt.tight_layout()
 plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+theory
+
+1. Aim
+To implement the Q-Learning algorithm, a Reinforcement Learning technique, on a 4×4 Grid World environment and study the effect of different epsilon values on learning performance.
+2. Theory
+Reinforcement Learning (RL) is a type of Machine Learning in which an agent learns by interacting with an environment. The agent performs actions and receives rewards or penalties based on its actions.
+
+Q-Learning is a model-free, off-policy Reinforcement Learning algorithm. It helps an agent learn the best action to take in a particular state to maximize the total future reward.
+
+In this experiment, a 4×4 Grid World is used. The agent starts from position (0,0) and tries to reach the goal position (3,3).
+
+Algorithm: Q-Learning on 4×4 Grid World
+1. Start the program.
+2. Import the required Python libraries such as NumPy, Pandas and Matplotlib.
+3. Initialize the Grid World environment with a size of 4×4.
+4. Set the starting position as (0,0) and the goal position as (3,3).
+5. Define four possible actions: UP, DOWN, LEFT and RIGHT.
+6. Initialize the Q-Table with zeros for all 16 states and 4 actions.
+7. Set the learning rate α = 0.1 and discount factor γ = 0.9.
+8. Repeat the following steps for 1000 episodes:
+   - Set the agent's current state to the starting position.
+   - Select an action using the epsilon-greedy policy.
+   - Perform the selected action.
+   - Calculate the next state and reward.
+   - Update the Q-Table using the Bellman equation.
+   - Move the agent to the next state.
+   - Repeat until the agent reaches the goal or the maximum number of steps is completed.
+9. Store the total reward, number of steps and success status for each episode.
+10. Extract the optimal policy from the learned Q-Table.
+11. Display the learned Q-Table and optimal policy.
+12. Plot reward convergence and moving average reward graphs.
+13. Experiment with different epsilon values (0.5, 0.1 and 0.01).
+14. Compare success rate, average reward and average steps.
+15. Stop the program.
+
+
+
+
+
+
+
+
+
+
+
