@@ -76,3 +76,42 @@ for a, (name, p) in zip(ax, preds.items()):
     sns.heatmap(confusion_matrix(y_test, p), annot=True, cmap="Blues", cbar=False, ax=a)
     a.set_title("%s (acc %.3f)" % (name, accuracy_score(y_test, p))); a.set_xlabel("Predicted")
 ax[0].set_ylabel("Actual"); plt.tight_layout()
+
+
+
+
+
+
+
+
+
+
+
+Aim
+To implement Support Vector Machine (SVM) classification on the Wine dataset using different kernels and evaluate their performance.
+Theory
+SVM is a supervised machine learning algorithm used for classification. It finds the best boundary that separates different classes. The closest data points to the boundary are called support vectors.
+Algorithm
+1. Import the required libraries.
+2. Load the Wine dataset.
+3. Separate the features X and target y.
+4. Split the data into 80% training and 20% testing.
+5. Standardize the data using StandardScaler.
+6. Create SVM models using:
+   - Linear kernel
+   - Polynomial kernel
+   - RBF kernel
+7. Train each model using the training data.
+8. Predict the classes for the test data.
+9. Calculate Accuracy, Precision, Recall and F1-score.
+10. Perform 5-fold cross-validation for different C and gamma values.
+11. Display the confusion matrix for each kernel.
+12. Compare the results.
+Parameters
+- C: Controls the penalty for misclassification.
+- Gamma: Controls the influence of individual data points in RBF.
+- Kernel: Defines the type of decision boundary.
+Result
+The three SVM kernels are successfully applied to the Wine dataset. Their performance is compared using accuracy, precision, recall, F1-score, and confusion matrices.
+Conclusion
+SVM successfully classifies the Wine dataset. The choice of kernel, C, and gamma affects the classification performance of the model.
