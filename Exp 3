@@ -144,3 +144,67 @@ plt.legend()
 plt.grid(True, linestyle='--', alpha=0.5)
 plt.show()
 
+
+
+
+
+
+
+
+
+
+
+Multiple Linear Regression (MLR)
+1. What is Multiple Linear Regression?
+Multiple Linear Regression is a supervised machine learning algorithm used to predict a continuous output value using two or more independent variables (input features).
+
+In simple words, it predicts one output based on multiple inputs.
+
+Example:
+
+Suppose we want to predict product sales based on advertising expenditure.
+TV	Radio	Newspaper	Sales
+100	30	20	25
+150	40	25	30
+200	50	30	40
+
+Here:
+- Independent variables (X): TV, Radio, Newspaper.
+- Dependent variable (Y): Sales.
+2. Mathematical Formula
+The Multiple Linear Regression equation is:
+\[
+\hat{Y}=b_0+b_1X_1+b_2X_2+\cdots+b_nX_n
+\]
+
+Where:
+- \(Y\) = Predicted output.
+- \(b_0\) = Intercept.
+- \(b_1,b_2\) = Regression coefficients.
+- \(X_1,X_2\) = Independent variables.
+- \(n\) = Number of input features.
+For your practical:
+\[
+Sales=b_0+b_1(TV)+b_2(Radio)+b_3(Newspaper)
+\]
+
+3. Algorithm of Multiple Linear Regression
+Step-by-step algorithm:
+1. Start: Import the required Python libraries.
+2. Load Dataset: Load the Advertising dataset.
+3. Data Preprocessing: Check missing values and clean the dataset.
+4. Feature Selection: Select TV, Radio and Newspaper as input features.
+5. Target Selection: Select Sales as the target variable.
+6. Split Dataset: Divide data into 80% training and 20% testing.
+7. Initialize Model: Create a Linear Regression model.
+8. Train Model: Use fit() to train the model.
+9. Make Predictions: Use predict() to predict sales.
+10. Evaluate Model: Calculate MSE, RMSE and R² score.
+11. Display Results: Compare actual and predicted sales.
+12. Stop.
+
+
+
+
+
+
