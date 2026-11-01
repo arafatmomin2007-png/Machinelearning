@@ -160,3 +160,63 @@ plt.show()
 
 
 
+
+
+
+
+
+
+
+
+
+Dimensionality Reduction using PCA and LDA
+1. What is Dimensionality Reduction?
+Dimensionality Reduction is a technique in Machine Learning used to reduce the number of input features in a dataset while preserving important information.
+
+In simple words, it means reducing unnecessary features and keeping the most useful information.
+
+Example:
+
+Suppose a dataset has 64 features. Using dimensionality reduction, we can reduce them to 20 or fewer features.
+Why is dimensionality reduction used?
+1. Reduces the number of features.
+2. Reduces computational time.
+3. Removes redundant information.
+4. Helps prevent overfitting.
+5. Makes data visualization easier.
+6. Can improve model performance.
+7. What is PCA?
+PCA – Principal Component Analysis
+PCA is an unsupervised dimensionality reduction technique that transforms a large number of correlated features into a smaller number of new features called principal components.
+
+PCA Algorithm (Steps)
+1. Collect the dataset.
+2. Standardize the data (when appropriate).
+3. Calculate the covariance matrix.
+4. Calculate eigenvalues and eigenvectors.
+5. Sort eigenvectors according to their eigenvalues in descending order.
+6. Select the required top principal components.
+7. Transform the original data into the reduced feature space.
+
+3. What is LDA?
+LDA – Linear Discriminant Analysis
+LDA is a supervised dimensionality reduction technique used to reduce the number of features while maximizing the separation between different classes.
+
+It uses class labels to find the best direction for separating data.
+
+Example: Separating handwritten digits into classes from 0 to 9.
+
+LDA Algorithm (Steps)
+1. Collect the dataset with class labels.
+2. Calculate the mean of each class.
+3. Calculate the overall mean of the dataset.
+4. Calculate within-class scatter matrix.
+5. Calculate between-class scatter matrix.
+6. Find eigenvalues and eigenvectors.
+7. Select the most useful discriminant components.
+8. Transform the original data into the reduced feature space.
+
+It tries to preserve maximum variance (information) in the data.
+
+
+
