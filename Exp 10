@@ -1,0 +1,196 @@
+CELL 1
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import time
+
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+CELL 2
+
+data = load_breast_cancer()
+
+X = pd.DataFrame(data.data, columns=data.feature_names)
+y = data.target
+
+print("Dataset: Breast Cancer Wisconsin")
+print("Number of samples:", X.shape[0])
+print("Number of features:", X.shape[1])
+print("Target classes:", data.target_names)
+
+CELL 3
+
+X.head()
+
+CELL 4
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.20,
+    random_state=42,
+    stratify=y
+)
+
+print("Training samples:", X_train.shape[0])
+print("Testing samples:", X_test.shape[0])
+
+CELL 5
+
+models = {
+    "Logistic Regression": Pipeline([
+        ("scaler", StandardScaler()),
+        ("classifier", LogisticRegression(max_iter=5000))
+    ]),
+
+    "Random Forest": RandomForestClassifier(
+        n_estimators=100,
+        random_state=42
+    ),
+
+    "Gradient Boosting": GradientBoostingClassifier(
+        random_state=42
+    )
+}
+
+CELL 6
+
+results = []
+
+for name, model in models.items():
+    start_time = time.time()
+    model.fit(X_train, y_train)
+    training_time = time.time() - start_time
+
+    y_pred = model.predict(X_test)
+
+    results.append({
+        "Model": name,
+        "Accuracy": accuracy_score(y_test, y_pred),
+        "Precision (Malignant)": precision_score(
+            y_test, y_pred, pos_label=0, zero_division=0
+        ),
+        "Recall (Malignant)": recall_score(
+            y_test, y_pred, pos_label=0, zero_division=0
+        ),
+        "F1-Score (Malignant)": f1_score(
+            y_test, y_pred, pos_label=0, zero_division=0
+        ),
+        "Training Time (s)": training_time
+    })
+
+CELL 7
+
+results_df = pd.DataFrame(results)
+results_df.round(4)
+
+CELL 8
+
+metrics = [
+    "Accuracy",
+    "Precision (Malignant)",
+    "Recall (Malignant)",
+    "F1-Score (Malignant)"
+]
+
+results_df.set_index("Model")[metrics].plot(
+    kind="bar",
+    figsize=(12, 6)
+)
+
+plt.title("Performance Comparison of Classification Models")
+plt.xlabel("Machine Learning Model")
+plt.ylabel("Score")
+plt.ylim(0, 1.05)
+plt.xticks(rotation=0)
+plt.legend(loc="lower right")
+plt.grid(axis="y", linestyle="--", alpha=0.5)
+plt.tight_layout()
+plt.show()
+
+CELL 9
+
+sns.barplot(
+    data=results_df,
+    x="Model",
+    y="Training Time (s)"
+)
+
+plt.title("Training Time Comparison")
+plt.xlabel("Machine Learning Model")
+plt.ylabel("Training Time (seconds)")
+plt.xticks(rotation=15)
+plt.tight_layout()
+plt.show()
+
+CELL 10
+
+best_model = results_df.loc[
+    results_df["Recall (Malignant)"].idxmax()
+]
+
+print("Model with highest malignant recall:", best_model["Model"])
+print("Malignant recall:", round(best_model["Recall (Malignant)"], 4))
+
+CELL 11
+
+tree_counts = [10, 50, 100, 200]
+tree_results = []
+
+for n in tree_counts:
+    model = RandomForestClassifier(
+        n_estimators=n,
+        random_state=42
+    )
+
+    start_time = time.time()
+    model.fit(X_train, y_train)
+    training_time = time.time() - start_time
+
+    y_pred = model.predict(X_test)
+
+    tree_results.append({
+        "Number of Trees": n,
+        "Accuracy": accuracy_score(y_test, y_pred),
+        "Malignant Recall": recall_score(
+            y_test, y_pred, pos_label=0, zero_division=0
+        ),
+        "Training Time (s)": training_time
+    })
+
+tree_df = pd.DataFrame(tree_results)
+tree_df.round(4)
+
+CELL 12
+
+plt.plot(
+    tree_df["Number of Trees"],
+    tree_df["Accuracy"],
+    marker="o"
+)
+
+plt.title("Number of Trees vs Accuracy")
+plt.xlabel("Number of Trees")
+plt.ylabel("Accuracy")
+plt.grid(True)
+plt.show()
+
+CELL 13
+
+plt.plot(
+    tree_df["Number of Trees"],
+    tree_df["Training Time (s)"],
+    marker="o"
+)
+
+plt.title("Number of Trees vs Training Time")
+plt.xlabel("Number of Trees")
+plt.ylabel("Training Time (seconds)")
+plt.grid(True)
+plt.show()
