@@ -163,6 +163,73 @@ plt.show()
 
 
 
+Practical: Implementation of Logistic Regression with Ridge and Lasso Regularization
+You can directly write the following content in your practical journal.
+1. Aim
+To implement Logistic Regression using the Breast Cancer dataset and compare the performance of Unregularized Logistic Regression, Ridge (L2) and Lasso (L1) regularization techniques.
+2. Objectives
+1. To understand Logistic Regression.
+2. To load and explore the Breast Cancer dataset.
+3. To perform feature scaling using StandardScaler.
+4. To divide the dataset into training and testing sets.
+5. To implement Logistic Regression.
+6. To apply Ridge and Lasso regularization.
+7. To compare model accuracy.
+8. To visualize and compare model coefficients.
+3. Theory
+Logistic Regression is a supervised machine learning algorithm used for classification problems. It predicts the probability of an input belonging to a particular class.
+
+In this practical, the Breast Cancer dataset is used to classify tumors into two categories:
+- Malignant (0): Cancerous tumor.
+- Benign (1): Non-cancerous tumor.
+The logistic regression algorithm uses the Sigmoid function.
+
+Sigmoid Function:
+\[
+P=\frac{1}{1+e^{-z}}
+\]
+
+Where:
+- P = Predicted probability.
+- e = Mathematical constant.
+- z = Weighted sum of input features.
+4. Algorithm
+1. Start the program.
+2. Import required libraries such as NumPy, Pandas, Matplotlib and Scikit-learn.
+3. Load the Breast Cancer dataset using load_breast_cancer().
+4. Separate the dataset into features (X) and target (y).
+5. Display dataset shape, number of features and class names.
+6. Split the dataset into 80% training data and 20% testing data.
+7. Use StandardScaler() to standardize the features.
+8. Create an unregularized Logistic Regression model.
+9. Train the model using the fit() function.
+10. Predict training and testing results.
+11. Calculate training and testing accuracy.
+12. Implement Ridge regularization using L2 penalty.
+13. Train and evaluate the Ridge model.
+14. Implement Lasso regularization using L1 penalty.
+15. Train and evaluate the Lasso model.
+16. Compare the accuracy of all three models.
+17. Count the number of coefficients set to zero by Lasso.
+18. Plot the coefficient comparison between Ridge and Lasso.
+19. Display the graph.
+20. Stop the program.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
