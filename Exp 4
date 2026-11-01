@@ -1,0 +1,181 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import PolynomialFeatures
+
+
+
+
+
+
+url = "https://raw.githubusercontent.com/selva86/datasets/master/Advertising.csv"
+df = pd.read_csv(url)
+
+# Clean column headers
+df.columns = df.columns.str.strip().str.lower()
+
+# For Polynomial Regression, use TV as input and Sales as target
+X = df[["tv"]]
+y = df["sales"]
+
+print("Data preview:")
+display(df.head())
+print("\nShape:", df.shape)
+print("Missing values:\n", df.isnull().sum())
+
+
+
+
+
+
+plt.figure(figsize=(7, 4))
+plt.scatter(X, y, color="blue", alpha=0.6)
+plt.xlabel("TV Advertising Budget")
+plt.ylabel("Sales")
+plt.title("TV Advertising vs. Sales")
+plt.grid(True, linestyle="--", alpha=0.5)
+plt.show()
+
+
+
+
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+print(f"Training samples: {X_train.shape[0]}")
+print(f"Testing samples:  {X_test.shape[0]}")
+
+
+
+
+
+
+degrees = [1, 2, 3, 5, 10]
+results = []
+
+for degree in degrees:
+  model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
+  model.fit(X_train, y_train)
+
+  # Predictions
+  y_train_pred = model.predict(X_train)
+  y_test_pred = model.predict(X_test)
+
+  # Errors and Scores
+  train_mse = mean_squared_error(y_train, y_train_pred)
+  test_mse = mean_squared_error(y_test, y_test_pred)
+  train_rmse = np.sqrt(train_mse)
+  test_rmse = np.sqrt(test_mse)
+  train_r2 = r2_score(y_train, y_train_pred)
+  test_r2 = r2_score(y_test, y_test_pred)
+
+  results.append(
+      [
+          degree,
+          train_mse,
+          test_mse,
+          train_rmse,
+          test_rmse,
+          train_r2,
+          test_r2,
+      ]
+  )
+
+results_df = pd.DataFrame(
+    results,
+    columns=[
+        "Degree",
+        "Train MSE",
+        "Test MSE",
+        "Train RMSE",
+        "Test RMSE",
+        "Train R²",
+        "Test R²",
+    ],
+)
+display(results_df.round(4))
+
+
+
+
+
+
+
+# Generate smooth sequence over TV range
+X_plot = np.linspace(X["tv"].min(), X["tv"].max(), 500).reshape(-1, 1)
+
+plt.figure(figsize=(10, 6))
+plt.scatter(
+    X_train, y_train, color="gray", alpha=0.5, label="Training Data"
+)
+
+colors = ["red", "green", "blue", "orange", "purple"]
+for degree, color in zip(degrees, colors):
+  model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
+  model.fit(X_train, y_train)
+  y_plot = model.predict(X_plot)
+  plt.plot(
+      X_plot, y_plot, color=color, linewidth=2, label=f"Degree {degree}"
+  )
+
+plt.xlabel("TV Advertising")
+plt.ylabel("Sales")
+plt.title("Fitted Polynomial Curves vs. Model Complexity")
+plt.legend()
+plt.grid(True, linestyle="--", alpha=0.5)
+plt.show()
+
+
+
+
+
+
+
+plt.figure(figsize=(8, 5))
+plt.plot(
+    results_df["Degree"],
+    results_df["Train MSE"],
+    marker="o",
+    linewidth=2,
+    label="Training MSE (Bias²)",
+)
+plt.plot(
+    results_df["Degree"],
+    results_df["Test MSE"],
+    marker="s",
+    linewidth=2,
+    color="red",
+    label="Testing MSE (Variance)",
+)
+
+plt.xlabel("Polynomial Degree (Model Complexity)")
+plt.ylabel("Mean Squared Error (MSE)")
+plt.title("Bias-Variance Trade-off Analysis")
+plt.xticks(degrees)
+plt.legend()
+plt.grid(True, linestyle="--", alpha=0.5)
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
