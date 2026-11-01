@@ -1,0 +1,140 @@
+ ------------------------------------------
+# K-MEANS CLUSTERING USING IRIS DATASET
+# ------------------------------------------
+
+# 1. Import libraries
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+from IPython.display import display
+from sklearn.cluster import KMeans
+from sklearn.datasets import load_iris
+from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import StandardScaler
+
+# 2. Load the Iris dataset (100% offline, embedded in scikit-learn)
+iris = load_iris()
+X = iris.data
+
+df = pd.DataFrame(X, columns=iris.feature_names)
+
+print("First 5 rows:")
+display(df.head())
+
+# 3. Check dataset
+print("\nDataset shape:")
+print(df.shape)
+
+print("\nMissing values:")
+print(df.isnull().sum())
+
+# 4. Standardize the data
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# ------------------------------------------
+# 5. ELBOW METHOD
+# ------------------------------------------
+inertia = []
+
+for k in range(1, 11):
+    kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+    kmeans.fit(X_scaled)
+    inertia.append(kmeans.inertia_)
+
+# 6. Plot Elbow Curve
+plt.figure(figsize=(8, 5))
+plt.plot(range(1, 11), inertia, marker="o")
+plt.xlabel("Number of Clusters (K)")
+plt.ylabel("Inertia")
+plt.title("Elbow Method")
+plt.xticks(range(1, 11))
+plt.grid(True, linestyle="--", alpha=0.5)
+plt.tight_layout()
+plt.show()
+
+# ------------------------------------------
+# 7. SILHOUETTE METHOD
+# ------------------------------------------
+silhouette_scores = []
+
+for k in range(2, 11):
+    kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+    labels = kmeans.fit_predict(X_scaled)
+    score = silhouette_score(X_scaled, labels)
+    silhouette_scores.append(score)
+
+# 8. Plot Silhouette Scores
+plt.figure(figsize=(8, 5))
+plt.plot(range(2, 11), silhouette_scores, marker="o", color="green")
+plt.xlabel("Number of Clusters (K)")
+plt.ylabel("Silhouette Score")
+plt.title("Silhouette Method")
+plt.xticks(range(2, 11))
+plt.grid(True, linestyle="--", alpha=0.5)
+plt.tight_layout()
+plt.show()
+
+# ------------------------------------------
+# 9. FINAL K-MEANS MODEL
+# ------------------------------------------
+optimal_k = 3
+
+kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
+clusters = kmeans.fit_predict(X_scaled)
+
+# 10. Add cluster labels
+df["Cluster"] = clusters
+
+print("\nClustered Data Preview:")
+display(df.head(10))
+
+# ------------------------------------------
+# 11. FINAL SILHOUETTE SCORE
+# ------------------------------------------
+final_score = silhouette_score(X_scaled, clusters)
+print(f"\nFinal Silhouette Score (k={optimal_k}): {final_score:.4f}")
+
+# ------------------------------------------
+# 12. VISUALIZE CLUSTERS
+# ------------------------------------------
+plt.figure(figsize=(8, 6))
+sns.scatterplot(
+    data=df,
+    x="petal length (cm)",
+    y="petal width (cm)",
+    hue="Cluster",
+    palette="Set1",
+    s=80,
+    alpha=0.9,
+)
+
+# Plot unscaled cluster centers on top of original feature coordinates
+centers_original = scaler.inverse_transform(kmeans.cluster_centers_)
+petal_length_idx = iris.feature_names.index("petal length (cm)")
+petal_width_idx = iris.feature_names.index("petal width (cm)")
+
+plt.scatter(
+    centers_original[:, petal_length_idx],
+    centers_original[:, petal_width_idx],
+    marker="X",
+    s=200,
+    c="black",
+    label="Centroids",
+)
+
+plt.title("K-Means Clustering - Iris Dataset")
+plt.xlabel("Petal Length (cm)")
+plt.ylabel("Petal Width (cm)")
+plt.legend()
+plt.grid(True, linestyle="--", alpha=0.5)
+plt.tight_layout()
+plt.show()
+
+# ------------------------------------------
+# 13. DISPLAY CLUSTER CENTERS
+# ------------------------------------------
+centers_df = pd.DataFrame(centers_original, columns=iris.feature_names)
+
+print("\nCluster Centers (Original Feature Scale):")
+display(centers_df.round(4))
