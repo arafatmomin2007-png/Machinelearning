@@ -167,56 +167,56 @@ plt.show()
 
 
 
+Practical: Comparison of Dimensionality Reduction Techniques – PCA and LDA using SVM
+1. Aim
+To implement and compare two dimensionality reduction techniques, Principal Component Analysis (PCA) and Linear Discriminant Analysis (LDA), using a Support Vector Machine (SVM) classifier on the handwritten Digits dataset.
+2. Objectives
+1. To load and understand the Digits dataset.
+2. To reduce the number of features using PCA and LDA.
+3. To classify handwritten digits using SVM.
+4. To compare accuracy and execution time.
+5. To visualize the dataset in 2D using PCA and LDA.
+3. Software and Libraries Required
+- Python
+- Jupyter Notebook / Google Colab
+- NumPy
+- Pandas
+- Matplotlib
+- Scikit-learn
+4. Theory
+1. Dimensionality Reduction:
+Dimensionality reduction is the process of reducing the number of input features while preserving important information. It helps reduce complexity and improve processing efficiency.
 
+2. PCA (Principal Component Analysis):
+PCA is an unsupervised dimensionality reduction technique. It converts the original features into a smaller set of new features called principal components while retaining maximum variance.
 
-Dimensionality Reduction using PCA and LDA
-1. What is Dimensionality Reduction?
-Dimensionality Reduction is a technique in Machine Learning used to reduce the number of input features in a dataset while preserving important information.
+3. LDA (Linear Discriminant Analysis):
+LDA is a supervised dimensionality reduction technique. It reduces features by maximizing the separation between different classes.
 
-In simple words, it means reducing unnecessary features and keeping the most useful information.
+4. SVM (Support Vector Machine):
+SVM is a supervised machine learning algorithm used for classification. It finds the best decision boundary to separate different classes.
 
-Example:
-
-Suppose a dataset has 64 features. Using dimensionality reduction, we can reduce them to 20 or fewer features.
-Why is dimensionality reduction used?
-1. Reduces the number of features.
-2. Reduces computational time.
-3. Removes redundant information.
-4. Helps prevent overfitting.
-5. Makes data visualization easier.
-6. Can improve model performance.
-7. What is PCA?
-PCA – Principal Component Analysis
-PCA is an unsupervised dimensionality reduction technique that transforms a large number of correlated features into a smaller number of new features called principal components.
-
-PCA Algorithm (Steps)
-1. Collect the dataset.
-2. Standardize the data (when appropriate).
-3. Calculate the covariance matrix.
-4. Calculate eigenvalues and eigenvectors.
-5. Sort eigenvectors according to their eigenvalues in descending order.
-6. Select the required top principal components.
-7. Transform the original data into the reduced feature space.
-
-3. What is LDA?
-LDA – Linear Discriminant Analysis
-LDA is a supervised dimensionality reduction technique used to reduce the number of features while maximizing the separation between different classes.
-
-It uses class labels to find the best direction for separating data.
-
-Example: Separating handwritten digits into classes from 0 to 9.
-
-LDA Algorithm (Steps)
-1. Collect the dataset with class labels.
-2. Calculate the mean of each class.
-3. Calculate the overall mean of the dataset.
-4. Calculate within-class scatter matrix.
-5. Calculate between-class scatter matrix.
-6. Find eigenvalues and eigenvectors.
-7. Select the most useful discriminant components.
-8. Transform the original data into the reduced feature space.
-
-It tries to preserve maximum variance (information) in the data.
-
+5. Digits Dataset:
+The Digits dataset contains 1,797 handwritten digit images from 0 to 9. Each image is of size 8 × 8 pixels, giving 64 features.
+5. Algorithm
+1. Start.
+2. Import the required Python libraries.
+3. Load the handwritten Digits dataset using load_digits().
+4. Separate the input features (X) and target labels (y).
+5. Display the dataset shape and unique digit classes.
+6. Split the dataset into training and testing sets using train_test_split() with a 70:30 ratio.
+7. Train an SVM classifier using the original 64 features.
+8. Predict the test data and calculate accuracy and execution time.
+9. Apply PCA to reduce the 64 features to 20 principal components.
+10. Train an SVM classifier using PCA-transformed data.
+11. Calculate accuracy, execution time, and explained variance.
+12. Apply LDA to reduce the features to 9 components.
+13. Train an SVM classifier using LDA-transformed data.
+14. Calculate accuracy and execution time.
+15. Compare the performance of the baseline, PCA, and LDA models using a DataFrame.
+16. Transform the dataset into 2D using PCA and LDA.
+17. Plot the 2D visualizations.
+18. Display the results.
+19. Stop.
 
 
